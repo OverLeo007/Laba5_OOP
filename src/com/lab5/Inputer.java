@@ -1,7 +1,6 @@
 package com.lab5;
 
-import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
+
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -35,12 +34,10 @@ public class Inputer {
    * @return -1 если ввод некорректен, число типа float при корректном вводе
    */
   public float getFloat() {
-    PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8);
     float  res;
     try {
       res = Float.parseFloat(sc.nextLine().replace(",", "."));
     } catch (Exception e) {
-      out.println(e);
       res = -1f;
     }
     return res;

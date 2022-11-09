@@ -78,13 +78,13 @@ class UI implements menuEnum {
    * Метод основного меню работы
    */
   public void menu() {
-    try {
-      this.humans.add(new Human(25, 8, 2003, 1.85f, 71, "Leo", "Sokolov", "м"));
-      this.humans.add(new Human(31, 10, 2008, 1.65f, 51, "Katya", "Sokolova", "ж"));
-      this.humans.add(new Human(19, 12, 2003, 1.76f, 56, "Arisha", "Demekhina", "ж"));
-    } catch (Exception e) {
-      out.println("???");
-    }
+//    try {
+//      this.humans.add(new Human(25, 8, 2003, 1.85f, 71, "Leo", "Sokolov", "м"));
+//      this.humans.add(new Human(31, 10, 2008, 1.65f, 51, "Katya", "Sokolova", "ж"));
+//      this.humans.add(new Human(19, 12, 2003, 1.76f, 56, "Arisha", "Demekhina", "ж"));
+//    } catch (Exception e) {
+//      out.println("???");
+//    }
 
     int choice;
     do {
@@ -120,6 +120,8 @@ class UI implements menuEnum {
                HumanCreateException exception) {
         out.println("При вводе какого-то значения произошла ошибка: "
             + exception.getMessage());
+      } catch (AssertionError e) {
+        out.println(e.getMessage());
       }
     } while (choice != EXIT);
   }
@@ -155,8 +157,10 @@ class UI implements menuEnum {
    * Метод удаления человека из списка по индексу
    *
    * @throws IncorrectIntException при некорректном индексе человека в списке
+   * @throws AssertionError        при пустом списке
    */
-  private void deleteHuman() throws IncorrectIntException {
+  private void deleteHuman() throws IncorrectIntException, AssertionError {
+    assert !humans.isEmpty() : "Не добавлено ни одного человека";
     out.println("Введите индекс человека в списке:");
     int index = inp.getInt();
     if (index < 1 || index > humans.size()) {
@@ -242,9 +246,11 @@ class UI implements menuEnum {
    * @throws IncorrectIntException    при некорректном заполнении значений типа int
    * @throws IncorrectFloatException  при некорректном заполнении значений типа float
    * @throws IncorrectStringException при некорректном заполнении значений строкового типа
+   * @throws AssertionError           при пустом списке
    */
   private void editHuman() throws IncorrectIntException,
-      IncorrectFloatException, IncorrectStringException {
+      IncorrectFloatException, IncorrectStringException, AssertionError {
+    assert !humans.isEmpty() : "Не добавлено ни одного человека";
     out.println("Введите индекс человека в списке:");
     int index = inp.getInt();
     if (index < 1 || index > humans.size()) {
@@ -347,8 +353,11 @@ class UI implements menuEnum {
 
   /**
    * Метод вывода всего списка людей
+   * @throws AssertionError при пустом списке
    */
-  private void printHumans() {
+  private void printHumans() throws AssertionError {
+    assert !humans.isEmpty() : "Не добавлено ни одного человека";
+
     int num = 1;
 
     for (Human human : this.humans) {
